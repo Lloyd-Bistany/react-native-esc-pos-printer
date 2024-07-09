@@ -51,6 +51,8 @@ class Printing {
     bold: boolean;
     underline: boolean;
     smooth: boolean;
+    isRed: boolean;
+
   };
   private _currentFontWidth: number;
 
@@ -64,6 +66,7 @@ class Printing {
       bold: false,
       underline: false,
       smooth: false,
+      isRed: false,
     };
     this._currentFontWidth = 1;
   }
@@ -79,6 +82,7 @@ class Printing {
       bold: false,
       underline: false,
       smooth: false,
+      isRed: false,
     };
   }
 
@@ -235,6 +239,8 @@ class Printing {
       [
         this._convertToEposBool(this._state.underline),
         this._convertToEposBool(this._state.bold),
+        this._convertToEposBool(this._state.isRed),
+
       ],
     ]);
 
@@ -272,6 +278,33 @@ class Printing {
       [
         this._convertToEposBool(this._state.underline),
         this._convertToEposBool(this._state.bold),
+        this._convertToEposBool(this._state.isRed),
+      ],
+    ]);
+
+    return this;
+  }
+
+  /**
+   * Set Red text
+   *
+   * @param  {boolean}          value  true to turn text color red, false to turn text color black
+   * @return {object}                  Return the object, for easy chaining commands
+   *
+   */
+  setRed(value?: boolean) {
+    if (typeof value === 'undefined') {
+      value = !this._state.isRed;
+    }
+
+    this._state.isRed = value;
+
+    this._queue([
+      PRINTING_COMMANDS.COMMAND_ADD_TEXT_STYLE,
+      [
+        this._convertToEposBool(this._state.underline),
+        this._convertToEposBool(this._state.bold),
+        this._convertToEposBool(this._state.isRed),
       ],
     ]);
 
